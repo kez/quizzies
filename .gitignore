@@ -39,3 +39,4 @@
 *DS_Store
 .env
 public/audio/*
+node_modules
