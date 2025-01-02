@@ -13,7 +13,7 @@ class Quiz::QuestionController < ApplicationController
     allowed_params = params.permit(:answer, :answer0, :answer1, :skip)
 
     if allowed_params.key?(:skip)
-      puts "!!!!!!!!!!!!!!!! SKIP"
+
       quiz_question.update(skipped: 1)
 
       if quiz_question.ordinal == @questions.count - 1
@@ -27,7 +27,8 @@ class Quiz::QuestionController < ApplicationController
       quiz_question.update(attempts: (quiz_question.attempts || 0) + 1)
     end
 
-    actor = Answers::CheckAnswer.call(question: quiz_question.question, input: allowed_params[:answer])
+    input = allowed_params[:answer] || [allowed_params[:answer0], allowed_params[:answer1]].compact
+    actor = Answers::CheckAnswer.call(question: quiz_question.question, input:)
     answer_is_correct = actor.correct
 
     pp answer_is_correct

@@ -34,7 +34,7 @@ class Questions::Generate::English::GenerateCommonlyConfusedWordsJob < Applicati
     body = {
       model: "gpt-4o",
       response_format: {type: "json_object"},
-    messages: [
+      messages: [
         {
           role: "user",
           content: <<~PROMPT

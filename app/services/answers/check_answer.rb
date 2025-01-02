@@ -10,6 +10,8 @@ class Answers::CheckAnswer < Actor
     Answers::English::Idioms,
     Answers::Maths::MultiplicationDivisionOrOther,
     Answers::SpellingPunctuation::Spellings,
+    Answers::SpellingPunctuation::IeEiWords,
+    Answers::SpellingPunctuation::CommonlyMisspelledWords,
     Answers::English::BestMissingWords,
     Answers::English::CommonlyConfusedWords
 end

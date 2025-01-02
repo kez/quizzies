@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html data-theme="emerald">
   <head>
-    <title><%= content_for(:title) || "Eleven Plus" %></title>
+    <title><%= content_for?(:html_title) ? yield(:html_title) : "Qiuzzies - quick quizzes on key 11+ topics" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -13,7 +13,7 @@
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
     <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <%# <link rel="icon" href="/icon.svg" type="image/svg+xml"> %>
     <link rel="apple-touch-icon" href="/icon.png">
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
@@ -21,8 +21,11 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
-    <div class="navbar bg-base-100 mx-auto max-w-3xl my-8">
-      <a class="btn btn-ghost text-2xl font-nunito-black" href="/">Quizzies</a>
+    <div class='flex gap-x-2 items-center mx-auto max-w-3xl my-8 px-6'>
+      <div><a class="" href="/"><img src="/logo.png" class='w-24'/></a></div>
+      <div class="navbar bg-base-100 ">
+        <a class="btn btn-ghost text-2xl font-nunito-black" href="/">Quizzies</a>
+      </div>
     </div>
     <main class="container mt-8 mx-auto max-w-3xl px-6">
       <%= yield %>
