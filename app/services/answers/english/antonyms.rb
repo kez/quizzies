@@ -3,6 +3,7 @@ class Answers::English::Antonyms < Actor
   input :input, type: Object
 
   output :correct
+  output :feedback
 
   def call
     return unless valid_for_this_question_type?
