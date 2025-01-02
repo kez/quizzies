@@ -6,8 +6,8 @@ class Answers::Maths::MultiplicationDivisionOrOther < Actor
 
   def call
     return unless valid_for_this_question_type?
-    self.correct = input.to_f == question.answer.to_f
-    puts [self.class.name, self.correct]
+    self.correct = Float(input) == Float(question.answer)
+    puts [self.class.name, correct]
   end
 
   private
@@ -17,6 +17,6 @@ class Answers::Maths::MultiplicationDivisionOrOther < Actor
   end
 
   def valid_for_this_question_type?
-    [this_question_type_key].include?(question.key)
+    this_question_type_key.include?(question.topic.key)
   end
 end

@@ -17,7 +17,13 @@
     <p>Even in a quiz with 5 questions we will vary the types of questions presented.</p>
 
     <h4 class='font-nunito'>Question sub-topics in these <%= @topic.title %> quizzes </h4>
-    <p>We are always expanding the types of questions available.
+    <p>We are always expanding the types of questions available. Currently these sub-topics are covered:</p>
+
+    <ul>
+      <% @topic.sub_topics.each do |sub_topic| %>
+        <li><%= sub_topic.title %></li>
+      <% end %>
+    </ul>
   
   </section>
 </div>

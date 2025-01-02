@@ -14,6 +14,7 @@
   <% if @recent_quizzes.size.positive? %>
   <h2 class='font-nunito-black'>Your recent quizzes</h2>
     <% @recent_quizzes.each do |quiz| %>
+    <% next unless quiz.topic %>
     <li>
       <div class='flex gap-x-2 items-center'>
         <div><%= link_to quiz.topic.title, quiz_path(quiz) %></div>
