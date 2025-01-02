@@ -12,7 +12,6 @@ class Quiz::QuestionController < ApplicationController
     quiz_question = QuizQuestion.where(quiz:, ordinal: params[:id]).first
     allowed_params = params.permit(:answer, :answer0, :answer1, :skip)
 
-
     if allowed_params.key?(:skip)
       puts "!!!!!!!!!!!!!!!! SKIP"
       quiz_question.update(skipped: 1)
@@ -28,7 +27,8 @@ class Quiz::QuestionController < ApplicationController
       quiz_question.update(attempts: (quiz_question.attempts || 0) + 1)
     end
 
-    answer_is_correct = Answers::CheckAnswer.call(question: quiz_question.question, input: allowed_params[:answer]).correct
+    actor = Answers::CheckAnswer.call(question: quiz_question.question, input: allowed_params[:answer])
+    answer_is_correct = actor.correct
 
     pp answer_is_correct
     redirect_to quiz_question_path(quiz.to_param, quiz_question.ordinal), flash: {error: "Not correct"} and return unless answer_is_correct
@@ -39,7 +39,7 @@ class Quiz::QuestionController < ApplicationController
       ahoy.track "Quiz Completed", {quid_id: quiz.id}
       redirect_to quiz_path(quiz.to_param), flash: {success: "Quiz completed"}
     else
-      redirect_to quiz_question_path(quiz.to_param, quiz_question.ordinal + 1), flash: {success: "Correct answer"}
+      redirect_to quiz_question_path(quiz.to_param, quiz_question.ordinal + 1), flash: {success: actor.feedback || "Correct answer"}
     end
   end
 end

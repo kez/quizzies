@@ -5,14 +5,13 @@ class Answers::English::Antonyms < Actor
   output :correct
 
   def call
-    pp valid_for_this_question_type?
-    pp question.topic.key
-    pp this_question_type_key
     return unless valid_for_this_question_type?
-    pp question.answers
-    pp input
-    pp question.answers.include?(input.to_s.downcase)
+
     self.correct = question.answers.include?(input.to_s.downcase)
+
+    if correct
+      self.feedback = "Correct - #{question.answer} is an antonym of #{question.title}"
+    end
   end
 
   private

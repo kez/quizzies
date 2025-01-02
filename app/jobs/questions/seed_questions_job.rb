@@ -11,15 +11,21 @@ class Questions::SeedQuestionsJob < ApplicationJob
       question_type = File.basename(file, ".rb").gsub("generate_", "").gsub("_job", "").gsub("_questions", "")
 
       # next unless %w[sequence_progression].include?(question_type)
-      # next unless %w[multiplication_division ratio proportions_of_numbers sequence_progression homophones].include?(question_type)
+      next unless %w[multiplication_division ratio best_missing_words antonyms homophones].include?(question_type)
       # next unless %w[idioms homophones antonyms].include?(question_type)
       # next unless %w[spellings].include?(question_type)
-      next unless %w[best_missing_words].include?(question_type)
+      # next unless %w[best_missing_words].include?(question_type)
 
       job_class = "Questions::Generate::#{topic.camelize}::#{job_name}".constantize
       puts question_type
       topic = Topic.find_by(key: question_type)
-      klass = job_class.new(20)
+      number_to_create = 20
+
+      if %w[multiplication_division homophones antonyms].include?(question_type)
+        number_to_create = 100
+      end
+
+      klass = job_class.new(number_to_create)
 
       questions = klass.perform_now
 
@@ -39,9 +45,9 @@ class Questions::SeedQuestionsJob < ApplicationJob
         begin
           Question.create!(h)
         rescue SQLite3::ConstraintException => e
-          raise e
+          # raise e
         rescue ActiveRecord::RecordNotUnique => e
-          raise e
+          # raise e
         end
       end
     end

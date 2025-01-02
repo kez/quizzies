@@ -22,7 +22,6 @@ class QuizController < ApplicationController
     quiz = Quiz.new(topic: topic, status: 0)
 
     sub_topics = topic.sub_topics.map { |sub_topic| sub_topic.id }
-    sub_topics = [18]
     questions = Question.where(topic_id: sub_topics).group_by(&:topic_id)
 
     question_topic_ids = questions.keys
@@ -31,7 +30,8 @@ class QuizController < ApplicationController
 
     question_count.times do
       topic_id_for_this = question_topic_ids[question_topic_idx]
-      _q = questions[topic_id_for_this].sample
+      _q = questions[topic_id_for_this]&.sample
+      next unless _q
 
       while final_questions.include?(_q)
         _q = questions[topic_id_for_this].sample

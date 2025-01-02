@@ -8,6 +8,7 @@ class Questions::Generate::English::GenerateBestMissingWordsJob < ApplicationJob
 
     @words.each do |word|
       puts "Running #{word}"
+      next unless Rails.cache.read("english:missing_words:#{word}")
       data_string = Rails.cache.fetch("english:missing_words:#{word}") do
         response = call_api(word)
         parsed_data = JSON.parse(response.read_body)
@@ -31,7 +32,6 @@ class Questions::Generate::English::GenerateBestMissingWordsJob < ApplicationJob
   private
 
   require "net/http"
-  require "json"
 
   def call_api(word)
     uri = URI("https://api.openai.com/v1/chat/completions")

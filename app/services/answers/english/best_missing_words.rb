@@ -3,10 +3,15 @@ class Answers::English::BestMissingWords < Actor
   input :input, type: Object
 
   output :correct
+  output :feedback
 
   def call
     return unless valid_for_this_question_type?
     self.correct = question.answer.to_s.downcase == input.to_s.downcase
+
+    if correct
+      self.feedback = "Correct - the word #{question.answer} means \"#{question.data["definition"]}\""
+    end
   end
 
   private

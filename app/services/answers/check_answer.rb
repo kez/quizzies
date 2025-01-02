@@ -3,6 +3,7 @@ class Answers::CheckAnswer < Actor
   input :input, type: Object
 
   output :correct
+  output :feedback
 
   play Answers::English::Homophones,
     Answers::English::Antonyms,
