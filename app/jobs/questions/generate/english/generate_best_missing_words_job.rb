@@ -5,7 +5,6 @@ class Questions::Generate::English::GenerateBestMissingWordsJob < ApplicationJob
 
     @words = JSON.parse(File.read(words_file)).shuffle
     questions = []
-
     @words.each do |word|
       puts "Running #{word}"
       next unless Rails.cache.read("english:missing_words:#{word}")
@@ -14,28 +13,22 @@ class Questions::Generate::English::GenerateBestMissingWordsJob < ApplicationJob
         parsed_data = JSON.parse(response.read_body)
         parsed_data.dig("choices", 0, "message", "content")
       end
-
       data = JSON.parse(data_string)
-
       questions << {
         answer: word,
         question: data["question"],
         data: {options: [data["possible_answer_1"], data["possible_answer_2"], data["possible_answer_3"]], definition: data["definition"]}
       }
-
       break if questions.size > 100
     end
-
     questions
   end
 
   private
 
   require "net/http"
-
   def call_api(word)
     uri = URI("https://api.openai.com/v1/chat/completions")
-
     # HTTP request body
     body = {
       model: "gpt-4o",
@@ -55,14 +48,12 @@ class Questions::Generate::English::GenerateBestMissingWordsJob < ApplicationJob
             possible_answer_2: Another, but different, possible alternative word but not too similar to the word `#{word}`
             possible_answer_3: #{word}
             definition: best, short, dictionary definition of the word #{word}
-
             You should return a valid JSON object with the given keys.
           PROMPT
         }
       ],
       max_tokens: 100
     }.to_json
-
     # HTTP request headers
     headers = {
       "Content-Type" => "application/json",
@@ -73,7 +64,6 @@ class Questions::Generate::English::GenerateBestMissingWordsJob < ApplicationJob
     http.use_ssl = true
     request = Net::HTTP::Post.new(uri, headers)
     request.body = body
-
     response = http.request(request)
   end
 end

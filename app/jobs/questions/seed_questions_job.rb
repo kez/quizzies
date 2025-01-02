@@ -11,7 +11,7 @@ class Questions::SeedQuestionsJob < ApplicationJob
       question_type = File.basename(file, ".rb").gsub("generate_", "").gsub("_job", "").gsub("_questions", "")
 
       # next unless %w[sequence_progression].include?(question_type)
-      next unless %w[multiplication_division ratio best_missing_words antonyms homophones].include?(question_type)
+      next unless %w[multiplication_division ratio best_missing_words antonyms homophones commonly_confused_words].include?(question_type)
       # next unless %w[idioms homophones antonyms].include?(question_type)
       # next unless %w[spellings].include?(question_type)
       # next unless %w[best_missing_words].include?(question_type)
@@ -23,6 +23,10 @@ class Questions::SeedQuestionsJob < ApplicationJob
 
       if %w[multiplication_division homophones antonyms].include?(question_type)
         number_to_create = 100
+      end
+
+      if %w[commonly_confused_words].include?(question_type)
+        number_to_create = 1000
       end
 
       klass = job_class.new(number_to_create)

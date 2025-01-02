@@ -10,5 +10,6 @@ class Answers::CheckAnswer < Actor
     Answers::English::Idioms,
     Answers::Maths::MultiplicationDivisionOrOther,
     Answers::SpellingPunctuation::Spellings,
-    Answers::English::BestMissingWords
+    Answers::English::BestMissingWords,
+    Answers::English::CommonlyConfusedWords
 end

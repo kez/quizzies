@@ -57,6 +57,19 @@
                 <% end %>
               
             </div>
+          <% elsif @question.question.topic.key == "commonly_confused_words"  %>
+            <div>
+              
+                <% @question.question.data['options'].shuffle.each_with_index do |sent, index| %>
+                <div class='flex gap-x-2 text-xl mb-8'>
+                  <div><input type="radio" name="answer" id="answer_<%= index %>" value="<%= sent %>"></div>
+                  <label for="answer_<%= index %>"><%= sent %></label>
+
+       
+                  </div>
+                <% end %>
+              
+            </div>
           <% else %>
             <%= f.text_field :answer, class: 'input input-bordered input-lg', value:  @question.answered ? @question.question.answer : nil, autofocus: true, autocomplete: 'off' %>
           <% end %>

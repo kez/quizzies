@@ -20,6 +20,18 @@
              <% if question.attempts&.positive? %>
                   <br><span class='text-gray-400 text-lg'> Hint:  <%= question.question.data['definition'] %></span>
                   <% end %>
+<% elsif question.question.topic.key ==  "commonly_confused_words" %>
+  <br />
+  Pick the most suitable word to complete the sentence:
+
+  <br />
+  <br />
+
+  <%= question.question.title.gsub(question.question.answer, '_____________') %>
+
+             <% if question.attempts&.positive? %>
+                  <br><span class='text-gray-400 text-lg'> Hint:  <%= question.question.data['definition'] %></span>
+                  <% end %>
 
 <% elsif question.question.topic.key ==  "spellings" %>
   Spell the word
