@@ -21,8 +21,8 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/container-queries'),
-    require('daisyui'),
-    require("tailwindcss-animate"),
+    require('daisyui')
+    // require("tailwindcss-animate"),
   ],
   daisyui: {
     themes: [
