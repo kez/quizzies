@@ -1,0 +1,27 @@
+<div>
+  <section class='prose prose-lg prose-inter'>
+    <h1><%= @quiz.topic.title %></h1>
+    <h3><%= @quiz.topic.super_topic.title %></h3>
+  
+    <% if @quiz.finished? %>
+    <p>There were <%= @questions.count %> questions in this quizlet.</p>
+
+    <p>You answered <%= @quiz.quiz_questions.where(answered: 1).count %> out of <%= @questions.count %>.</p>
+
+    <a href='/quiz/<%= @super_topic.key %>/<%= @topic.key %>' class='font-nunito animate-in fade-in zoom-in bg-blue-500 hover:bg-blue-700 text-white font-bold text-2xl py-2 px-4 rounded no-underline'>New <%= @topic.title %> Quiz</a>
+
+    <% end %>
+  
+    <% if !@quiz.finished? %>
+    <p>There are <%= @questions.count %> questions in this quizlet.</p>
+    
+
+    <% end %>
+    
+    
+    
+    
+  
+  </section>
+</div>
+</div>

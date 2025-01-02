@@ -1,0 +1,55 @@
+<% if question.question.topic.key ==  "sequence_progression" %>
+  Complete the following sequence: <b><%= question.title %></b>
+<% elsif  question.question.topic.key ==  "homophones" %>
+  What is a homophone for the word "<b><%= question.title %></b>"
+<% elsif question.question.topic.key ==  "antonyms" %>
+  What is an antonym for the word "<b><%= question.title %></b>"
+<% elsif question.question.topic.key ==  "idioms" %>
+  Which of the following contain an idiom:
+<% elsif question.question.topic.key ==  "ratio" %>
+  <%= question.title %>
+<% elsif question.question.topic.key ==  "best_missing_words" %>
+  <br />
+  Pick the most suitable word to complete the sentence:
+
+  <br />
+  <br />
+
+  <%= question.question.title.gsub(question.question.answer, '_____________') %>
+
+             <% if question.attempts&.positive? %>
+                  <br><span class='text-gray-400 text-lg'> Hint:  <%= question.question.data['definition'] %></span>
+                  <% end %>
+
+<% elsif question.question.topic.key ==  "spellings" %>
+  Spell the word
+  <button onclick="play()" class="btn btn-primary text-white">Play audio</button>
+  <button onclick="playSlow()" class="btn btn-primary text-white">Play audio (slower)</button>
+  <audio autoplay data-key="word" src="/audio/spellings_punctuations/spellings/<%= question.question.data['audio_file_1'] %>"></audio>
+  <audio data-key="word_slow" src="/audio/spellings_punctuations/spellings/<%= question.question.data['audio_file_2'] %>"></audio>
+  <script>
+    function play() {
+    const audio = document.querySelector(`audio[data-key="word"]`);
+
+    if (audio) {
+    console.log(audio)
+    // key.classList.add("playing");
+    audio.currentTime = 0;audio.play();
+      document.getElementById("answer").focus();
+
+    }
+    }
+    function playSlow() {
+    const audio_slow = document.querySelector(`audio[data-key="word_slow"]`);
+
+    if (audio_slow) {
+    console.log(audio_slow)
+    // key.classList.add("playing");
+    audio_slow.currentTime = 0;audio_slow.play();
+    document.getElementById("answer").focus();
+    }
+    }
+  </script>
+<% else %>
+  <%= question.title %>
+<% end %>

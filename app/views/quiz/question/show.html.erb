@@ -1,0 +1,74 @@
+
+  <div class='flex justify-between items-center mb-4'>
+    <h1 class='text-4xl font-bold font-nunito-black'><%= @quiz.topic.title %></h1>
+    <h3 class='text-xl'>Question <%= @question.ordinal + 1 %> of <%= @questions.count %></h3>
+  </div>
+  <!-- <%= turbo_stream.replace "question" do %> --
+  
+  >
+  <!-- <turbo-frame id="question">-->
+  <div class='grid grid-cols-1 gap-y-4'>
+    <div class='flex justify-between gap-x-2'>
+      <% if @question.ordinal > 0 %>
+        <%== link_to "< Previous question", quiz_question_path(@quiz.to_param, @question.ordinal - 1), class: 'btn btn-default btn-sm' %>
+      <% end %>
+      <% if @question.ordinal < @quiz.questions.count - 1 && ( @question.answered || @question.skipped ) %>
+        <%== link_to "Next question >", quiz_question_path(@quiz.to_param, @question.ordinal + 1), class: 'btn btn-default btn-sm' %>
+      <% end %>
+    </div>
+    
+    <%= render "shared/flashes" %>
+    <div class="animate-in fade-in zoom-in">
+      <div class='text-3xl my-8'>
+
+
+        <%= render "shared/question",  {question: @question} %>
+
+      
+      </div>
+      <%= form_with url: "/quiz/#{@question.quiz.to_param}/question/#{@question.ordinal}", method: :PUT do |f| %>
+        <div class='fle gap-x-2'>
+          <% if @question.question.topic.key ==  "sequence_progression" %>
+            <% @question.question.answers.size.times do |i| %>
+              <%= f.text_field "answer#{i}", class: 'input input-bordered input-lg', value:  @question.answered ? @question.question.answer : nil, autofocus: true, autocomplete: 'off' %>
+            <% end %>
+          <% elsif @question.question.topic.key == "idioms"  %>
+            <div>
+              
+                <% JSON.parse(@question.title).shuffle.each_with_index do |sent, index| %>
+                <div class='flex gap-x-2 text-xl mb-8'>
+                  <div><input type="radio" name="answer" id="answer_<%= index %>" value="<%= sent %>"></div>
+                  <label for="answer_<%= index %>"><%= sent %></label>
+                  </div>
+                <% end %>
+              
+            </div>
+          
+          <% elsif @question.question.topic.key == "best_missing_words"  %>
+            <div>
+              
+                <% @question.question.data['options'].shuffle.each_with_index do |sent, index| %>
+                <div class='flex gap-x-2 text-xl mb-8'>
+                  <div><input type="radio" name="answer" id="answer_<%= index %>" value="<%= sent %>"></div>
+                  <label for="answer_<%= index %>"><%= sent %></label>
+
+       
+                  </div>
+                <% end %>
+              
+            </div>
+          <% else %>
+            <%= f.text_field :answer, class: 'input input-bordered input-lg', value:  @question.answered ? @question.question.answer : nil, autofocus: true, autocomplete: 'off' %>
+          <% end %>
+        </div>
+        <div class='flex justify-start gap-x-2'>
+          <%= f.button 'Submit Answer', class: 'btn btn-secondary btn-lg my-4' if @question.answered != 1 %>
+          <%= f.button 'Continue', class: 'btn btn-success btn-lg my-4' if @question.answered == 1 %>
+          <%= f.button 'Skip question', name: :skip, class: 'btn btn-ghost btn-lg my-4' if @question.attempts.to_i > 0 && @question.answered.to_i != 1 %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <!--</turbo-frame>
+    <% end %> -->
+

@@ -1,0 +1,23 @@
+<div>
+  <section class='prose prose-lg prose-inter'>
+    <h2 class='font-nunito-black'>Start a new <%= @super_topic.title %> <%= @topic.title %> quiz</h2>
+    <div class='grid grid-cols-2 gap-4 '>
+    <% [5,10,15,20].each do |i| %>
+      <%= form_with url: "/quiz", method: :POST do |f|  %>
+        <%= f.hidden_field :question_count, value: i %>
+        <%= f.hidden_field :topic, value: @topic.to_param %>
+        <%= f.button "#{i} questions", class: "btn btn-primary btn-lg animate-in fade-in zoom-in text-white" %>
+      <% end %>
+    <% end %>
+    </div>
+
+    <h3 class='font-nunito-black'>About these <%= @super_topic.title %> <%= @topic.title %> quizzes</h3>
+    <p>These <%= @topic.title %> quizzes have been designed to interactively quiz/test on key topics in ther <%= @super_topic.title %>.</p>
+    <p>The questions are randomised and selected from a pool of thousands of questions in different sub-topics so you will rarely see the exact same questions.  This ensures knowledge and skills are tested continually.</p>
+    <p>Even in a quiz with 5 questions we will vary the types of questions presented.</p>
+
+    <h4 class='font-nunito'>Question sub-topics in these <%= @topic.title %> quizzes </h4>
+    <p>We are always expanding the types of questions available.
+  
+  </section>
+</div>

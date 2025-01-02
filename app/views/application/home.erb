@@ -1,0 +1,40 @@
+<div>
+  <section class='prose prose-lg prose-inter'>
+    <h1 class='font-nunito-black'>11+ Quizzes</h1>
+    <p>Test your knowledge with our 11+ quizzies.  Short quizes on the various topics with instant feedback.</p>
+    <h2 class='font-nunito-black'>Choose an 11+ topic to get started</h2>
+    <div class='grid grid-cols-2 gap-4'>
+      <% @super_topic.topics.each_with_index do |topic, index| %>
+        <% next if topic.parent_topic_id.present? %>
+        <a href='/quiz/<%= @super_topic.key %>/<%= topic.key %>' class='font-nunito animate-in delay-<%= index * 100 %> fade-in zoom-in bg-blue-500 hover:bg-blue-700 text-white font-bold text-2xl py-2 px-4 rounded no-underline'><%= topic.title %></a>
+      <% end %>
+    </div>
+
+
+  <% if @recent_quizzes.size.positive? %>
+  <h2 class='font-nunito-black'>Your recent quizzes</h2>
+    <% @recent_quizzes.each do |quiz| %>
+    <li>
+      <div class='flex gap-x-2 items-center'>
+        <div><%= link_to quiz.topic.title, quiz_path(quiz) %></div>
+        <div class='text-gray-300 text-sm'><%= quiz.created_at.strftime('%d %b') %></div>
+        <div class='badge badge-outline <%= quiz.finished? ? 'badge-success' : 'badge-neutral'%>'><%= quiz.finished? ? "Finished" : "Unfinished" %></div>
+        
+        </li>
+    <% end %>
+    <% end %>
+  </section>
+
+
+</div>
+<%# 
+delay-100
+delay-200
+delay-300
+delay-400
+delay-600
+delay-700
+delay-800
+delay-900
+delay-1000
+ %>
