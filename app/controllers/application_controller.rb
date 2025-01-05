@@ -1,11 +1,12 @@
 class ApplicationController < ActionController::Base
-  # include Authentication
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
+  include Authentication
   include ActionController::Cookies
+  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
+
   # allow_browser versions: :modern
 
+  allow_unauthenticated_access
   before_action :set_session
-  # allow_unauthenticated_access
 
   def home
     @super_topic = SuperTopic.first
