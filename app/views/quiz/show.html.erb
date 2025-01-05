@@ -1,34 +1,28 @@
 <div>
   <section class='prose prose-lg prose-inter'>
-    <h1><%= @quiz.topic.title %></h1>
+    <h1 class='font-nunito-black'><%= @quiz.topic.title %></h1>
     <h3><%= @quiz.topic.super_topic.title %></h3>
-  
     <% if @quiz.finished? %>
-    <p>There were <%= @questions.count %> questions in this quizlet.</p>
-
-    <p>You answered <%= @quiz.quiz_questions.where(answered: 1).count %> out of <%= @questions.count %>.</p>
-
-    <h4>Questions detail:</h4>
-    <ol>
-    <% @questions.each_with_index do |question, index| %>
-    <li> <%= question.answered ? '✅' : 'skipped' %> <%= question.attempts > 1 ? "#{question.attempts} attempts" : '' %></li>
+      <%= render "shared/flashes" %>
+      <p>There were <%= @questions.count %> questions in this quiz.  <% if @quiz.started_at %>The quiz was completed in <%= @quiz.finished_at - @quiz.started_at %>.<% end %></p>
+      <p>You answered <%= @quiz.quiz_questions.where(answered: 1).count %> out of <%= @questions.count %>.</p>
+      <h4>Questions detail:</h4>
+      <ol>
+        <% @questions.each_with_index do |question, index| %>
+          <li>
+            Topic `<%= question.question.topic.title %>`
+            <%= question.answered ? '✅' : 'skipped' %>
+            <% if question.attempts > 1 %>
+              <%= "#{question.attempts} attempts"  %>
+            <% end %>
+          </li>
+        <% end %>
+      </ol>
+      <a href='/quiz/<%= @super_topic.key %>/<%= @topic.key %>' class='font-nunito animate-in fade-in zoom-in bg-blue-500 hover:bg-blue-700 text-white font-bold text-2xl py-2 px-4 rounded no-underline'>New <%= @topic.title %> Quiz</a>
     <% end %>
-    </ol>
-
-    <a href='/quiz/<%= @super_topic.key %>/<%= @topic.key %>' class='font-nunito animate-in fade-in zoom-in bg-blue-500 hover:bg-blue-700 text-white font-bold text-2xl py-2 px-4 rounded no-underline'>New <%= @topic.title %> Quiz</a>
-
-    <% end %>
-  
     <% if !@quiz.finished? %>
-    <p>There are <%= @questions.count %> questions in this quizlet.</p>
-    
-
+      <p>There are <%= @questions.count %> questions in this quizlet.</p>
     <% end %>
-    
-    
-    
-    
-  
   </section>
 </div>
 </div>

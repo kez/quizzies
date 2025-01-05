@@ -46,12 +46,15 @@ class QuizController < ApplicationController
 
     quiz.data ||= {}
     quiz.data["session_nanoid"] = session[:nanoid]
+    quiz.started_at = DateTime.now
     quiz.save
+
     final_questions.each_with_index do |question, ordinal|
       QuizQuestion.create(quiz_id: quiz.id, question: question, ordinal:)
     end
 
     ahoy.track "Quiz Created", {quid_id: quiz.id}
+
     redirect_to quiz_question_path(quiz.to_param, 0), notice: "Quiz created - good luck!", format: :html
   end
 end
