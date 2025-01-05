@@ -66,15 +66,5 @@ class CreateTopics < ActiveRecord::Migration[8.0]
       t.index ["super_topic_id"], name: "index_topics_on_super_topic_id"
       t.index ["topics_id"], name: "index_topics_on_topics_id"
     end
-
-    create_table "users" do |t|
-      t.integer "status"
-      t.string "email"
-      t.string "name"
-      t.string "avatar"
-      t.json "data"
-      t.datetime "created_at", null: false
-      t.datetime "updated_at", null: false
-    end
   end
 end

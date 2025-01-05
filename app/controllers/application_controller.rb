@@ -1,13 +1,13 @@
 class ApplicationController < ActionController::Base
+  include Authentication
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   include ActionController::Cookies
-  allow_browser versions: :modern
+  # allow_browser versions: :modern
 
   before_action :set_session
+  allow_unauthenticated_access
 
   def home
-    #   @questions = Questions::Generate::Maths::ProportionsOfNumbersJob.perform_now(5)
-    #   @questions1 = Questions::Generate::Maths::SequenceProgressionJob.perform_now(5)
     @super_topic = SuperTopic.first
 
     @recent_quizzes = []

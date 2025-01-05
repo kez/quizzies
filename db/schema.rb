@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_29_115914) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_05_171001) do
   create_table "ahoy_events", force: :cascade do |t|
     t.integer "visit_id"
     t.integer "user_id"
@@ -63,6 +63,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_29_115914) do
     t.string "nanoid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.json "data", default: {}
     t.index ["topic_id", "title"], name: "index_questions_on_topic_id_and_title", unique: true
     t.index ["topic_id"], name: "index_questions_on_topic_id"
   end
@@ -91,8 +92,19 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_29_115914) do
     t.json "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "started_at"
+    t.datetime "finished_at"
     t.index ["topic_id"], name: "index_quizzes_on_topic_id"
     t.index ["user_id"], name: "index_quizzes_on_user_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
   create_table "super_topics", force: :cascade do |t|
@@ -123,12 +135,18 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_29_115914) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "email_address", null: false
+    t.string "password_digest", null: false
+    t.string "nanoid"
+    t.string "original_session_nanoid"
+    t.json "data", default: {}
     t.integer "status"
-    t.string "email"
     t.string "name"
     t.string "avatar"
-    t.json "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
+
+  add_foreign_key "sessions", "users"
 end

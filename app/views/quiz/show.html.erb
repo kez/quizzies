@@ -1,16 +1,21 @@
+<canvas id="canvas-scattering" style="position: absolute; top:0; pointer-events: none;":></canvas>
 <div>
   <section class='prose prose-lg prose-inter'>
     <h1 class='font-nunito-black'><%= @quiz.topic.title %></h1>
     <h3><%= @quiz.topic.super_topic.title %></h3>
-    <% if @quiz.finished? %>
-      <%= render "shared/flashes" %>
-      <p>There were <%= @questions.count %> questions in this quiz.  <% if @quiz.started_at %>The quiz was completed in <%= @quiz.finished_at - @quiz.started_at %>.<% end %></p>
+  </section>
+  <% if @quiz.finished? %>
+    <%= render "shared/flashes" %>
+    <section class='prose prose-lg prose-inter'>
+      <p>There were <%= @questions.count %> questions in this quiz.  <% if @quiz.started_at %><span class='font-medium'>The quiz was completed in <%= distance_of_time_in_words(@quiz.started_at, @quiz.finished_at) %>.</span><% end %></p>
       <p>You answered <%= @quiz.quiz_questions.where(answered: 1).count %> out of <%= @questions.count %>.</p>
       <h4>Questions detail:</h4>
       <ol>
         <% @questions.each_with_index do |question, index| %>
           <li>
-            Topic `<%= question.question.topic.title %>`
+            Topic <span class='bg-gray-100 font-medium'>
+              <%= link_to question.question.topic.title, quiz_question_path(@quiz.to_param, index) %>
+              </span>
             <%= question.answered ? '✅' : 'skipped' %>
             <% if question.attempts > 1 %>
               <%= "#{question.attempts} attempts"  %>
@@ -18,11 +23,76 @@
           </li>
         <% end %>
       </ol>
-      <a href='/quiz/<%= @super_topic.key %>/<%= @topic.key %>' class='font-nunito animate-in fade-in zoom-in bg-blue-500 hover:bg-blue-700 text-white font-bold text-2xl py-2 px-4 rounded no-underline'>New <%= @topic.title %> Quiz</a>
+      
+      <a href='/quiz/<%= @super_topic.key %>/<%= @topic.key %>' class='btn btn-hand btn-lg btn-secondary '>New <%= @topic.title %> Quiz</a>
+      <a href='/' class='btn btn-hand btn-lg'>Start a different quiz</a>
+      <% if flash[:confetti] %>
+      <script>
+        function setupCanvas(id) {
+        const canvas = document.getElementById(id);
+        const ctx = canvas.getContext('2d');
+        canvas.width = 1600/2;
+        canvas.height = 2000/2;
+        return { canvas, ctx };
+          }
+
+           let colors = [
+        "#10b981",
+        "#7c3aed",
+        "#fbbf24",
+        "#ef4444",
+        "#3b82f6",
+        "#22c55e",
+        "#f97316",
+        "#ef4444",
+          ]
+
+          function renderScatteringConfetti() {
+        const confetti = []
+        const start = performance.now() // To keep track of time
+        const { canvas, ctx } = setupCanvas('canvas-scattering');
+
+        for (let i = 0; i < 40; i++) {
+          const radius = Math.floor(Math.random() * 50) - 10
+          const tilt = Math.floor(Math.random() * 10) - 10
+          const x = Math.random() * canvas.width;
+          const y = Math.random() * canvas.height;
+
+          confetti.push({
+            x,
+            y,
+            radius,
+            tilt,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            yVelocity: Math.random() * 3,
+            xVelocity: Math.random() * 2 - 1
+          })
+        }
+
+        function update() {
+          // Run for at most 10 seconds
+          if (performance.now() - start > 10000) return
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          confetti.forEach((piece) => {
+            piece.y += piece.yVelocity;
+            piece.x += piece.xVelocity;
+            ctx.beginPath();
+            ctx.lineWidth = piece.radius / 2;
+            ctx.strokeStyle = piece.color;
+            ctx.moveTo(piece.x + piece.tilt + piece.radius / 4, piece.y);
+            ctx.lineTo(piece.x + piece.tilt, piece.y + piece.tilt + piece.radius / 4);
+            ctx.stroke();
+          })
+          requestAnimationFrame(update);
+        }
+        update();
+          }
+          renderScatteringConfetti();
+      </script>
+      <% end %>
     <% end %>
     <% if !@quiz.finished? %>
       <p>There are <%= @questions.count %> questions in this quizlet.</p>
     <% end %>
   </section>
-</div>
 </div>

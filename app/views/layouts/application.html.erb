@@ -20,15 +20,22 @@
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-  <body>
-    <div class='flex gap-x-2 items-center mx-auto max-w-3xl my-8 px-6'>
-      <div><a class="" href="/"><img src="/logo.png" class='w-24'/></a></div>
-      <div class="navbar bg-base-100 ">
-        <a class="btn btn-ghost text-2xl font-nunito-black" href="/">Quizzies</a>
+  <body class='bg-gradient-to-r from-teal-400 to-yellow-200 min-h-screen'>
+
+<div class='pt-16'>
+
+    <div class=" mx-auto max-w-4xl px-12 bg-white btn-hand ">
+      <div class='flex gap-x-2 items-center mx-auto pt-8 pb-16 '>
+        <div><a class="" href="/"><img src="/logo.png" class='w-24'/></a></div>
+        <div class="navbar ">
+          <a class="btn btn-ghost text-2xl font-nunito-black" href="/">Quizzies</a>
+        </div>
+      </div>
+
+      <div class='pb-8'>
+      <%= yield %>
       </div>
     </div>
-    <main class="container mt-8 mx-auto max-w-3xl px-6">
-      <%= yield %>
-    </main>
+    </div>
   </body>
 </html>

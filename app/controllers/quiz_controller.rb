@@ -22,22 +22,29 @@ class QuizController < ApplicationController
     quiz = Quiz.new(topic: topic, status: 0)
 
     sub_topics = topic.sub_topics.map { |sub_topic| sub_topic.id }
-    questions = Question.where(topic_id: sub_topics).group_by(&:topic_id)
+    potential_questions = Question.select(:id, :topic_id).where(topic_id: sub_topics).all.shuffle
+    quizzes_for_this_user = Quiz.where(Arel.sql("data->>'session_nanoid' is not null")).where(Arel.sql("data->>'session_nanoid' = ?", session[:nanoid])).pluck(:id)
+    answered_questions_for_this_user = QuizQuestion.where(quiz_id: quizzes_for_this_user).pluck(:question_id)
 
-    question_topic_ids = questions.keys
+    sorted_potential_questions = potential_questions.sort_by do |question|
+      answered_questions_for_this_user.include?(question.id) ? 1 : 0
+    end.group_by(&:topic_id)
+
+    question_topic_ids = sorted_potential_questions.keys
     question_topic_idx = 0
     final_questions = []
 
     question_count.times do
       topic_id_for_this = question_topic_ids[question_topic_idx]
-      _q = questions[topic_id_for_this]&.sample
-      next unless _q
+      puts "Shifting for topic #{topic_id_for_this}"
+      this_question = sorted_potential_questions[topic_id_for_this].shift
+      next unless this_question
 
-      while final_questions.include?(_q)
-        _q = questions[topic_id_for_this].sample
+      while final_questions.include?(this_question)
+        this_question = sorted_potential_questions[topic_id_for_this].shift
       end
 
-      final_questions << _q
+      final_questions << this_question
 
       question_topic_idx += 1
 
