@@ -11,14 +11,17 @@
 
 
 
- @font-face {
-  font-family: 'Nunito Black';
-  src: url('/fonts/Nunito-Black.woff') format('woff');
-      font-style: normal;
+@font-face {
+    font-family: 'Nunito Black';
+    src: url('/fonts/Nunito-Black.woff') format('woff');
+    font-style: normal;
 }
- @font-face {
-  font-family: 'Nunito';
-  src: url('/fonts/Nunito-Regular.woff') format('woff'),
-      font-weight: normal;
-      font-style: normal;
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('/fonts/Nunito-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
+
+

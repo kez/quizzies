@@ -30,7 +30,7 @@
   Pick the most suitable word to complete the sentence:
   <br />
   <br />
-  <span class='text-black'><%= question.question.title.gsub(question.question.answer, '_____________') %></span>
+  <span class='text-black'><%= question.question.title.gsub(/#{question.question.answer}/i, '_____________') %></span>
   <% if question.attempts&.positive? %>
     <br>
     <span class='text-gray-400 text-lg'> Hint:  <%= question.question.data['definition'] %></span>
@@ -66,6 +66,8 @@
     }
     }
   </script>
+<% elsif question.question.topic.key == "multiplication_division" %>
+  What is <%= question.title %>
 <% else %>
   <%= question.title %>
 <% end %>

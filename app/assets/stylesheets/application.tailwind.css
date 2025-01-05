@@ -2,12 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
 
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
-  }
+
+
+
+.border-5 {
+  border-width: 5px;
 }
 
-*/
+.rounded-tl-xl-sm {
+  border-top-left-radius: 255px 15px;
+}
+
+.rounded-tr-sm-xl {
+  border-top-right-radius: 15px 200px;
+}
+
+.rounded-bl-sm-xl {
+  border-bottom-left-radius: 15px 255px;
+}
+
+.rounded-br-xl-sm {
+  border-bottom-right-radius: 200px 15px;
+}
+
+@layer components {
+  .btn-hand {
+    border-top-left-radius: 255px 20px;
+
+    border-top-right-radius: 20px 200px;
+
+    border-bottom-left-radius: 20px 255px;
+
+    border-bottom-right-radius: 200px 20px;
+  }
+
+}
