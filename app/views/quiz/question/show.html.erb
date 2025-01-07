@@ -17,7 +17,7 @@
   </div>
   <%= render "shared/flashes" %>
   <div class="animate-in fade-in zoom-in">
-    <div class='text-3xl  text-slate-500'>
+    <div class='text-3xl  text-slate-500 mb-4'>
       <%= render "shared/question",  {question: @question} %>
     </div>
     <%= form_with url: "/quiz/#{@question.quiz.to_param}/question/#{@question.ordinal}", method: :PUT do |f| %>
@@ -62,6 +62,15 @@
               </div>
             <% end %>
           </div>
+                <% elsif @question.question.topic.key == "place_values"  %>
+          <div>
+            <% @question.question.data['options'].shuffle.each_with_index do |sent, index| %>
+              <div class='flex gap-x-2 text-3xl  mb-8'>
+                <div><input type="radio" name="answer" id="answer_<%= index %>" value="<%= sent %>"></div>
+                <label for="answer_<%= index %>"><%= sent %></label>
+              </div>
+            <% end %>
+          </div>
         <% elsif @question.question.topic.key == "ie_ei_words"  %>
           <div>
             <div class='text-3xl my-8 flex flex-wrap items-center gap-x-1'>
@@ -92,7 +101,7 @@
             </div>
           </div>
         <% else %>
-          <%= f.text_field :answer, class: 'input input-bordered input-lg', value:  @question.answered ? @question.question.answer : nil, autofocus: true, autocomplete: 'off' %>
+          <%= f.text_field :answer, class: 'input input-bordered input-lg', value:  @question.answered ? @question.question.answer : nil, autofocus: true, autocomplete: 'off', required: (@question.attempts.to_i.zero?) %>
         <% end %>
       </div>
       <div class='flex justify-start gap-x-2'>

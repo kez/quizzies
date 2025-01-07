@@ -13,7 +13,7 @@ class Answers::Maths::MultiplicationDivisionOrOther < Actor
   private
 
   def this_question_type_key
-    %w[multiplication_division ratio]
+    %w[multiplication_division ratio place_value_multiplication_division place_values]
   end
 
   def valid_for_this_question_type?

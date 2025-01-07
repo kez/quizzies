@@ -13,7 +13,7 @@ maths_topic = Topic.unscoped.find_or_create_by(title: "Maths", super_topic:, key
 english_topic = Topic.unscoped.find_or_create_by(title: "English", super_topic:, key: "english")
 spelling_punctuation_topic = Topic.unscoped.find_or_create_by(title: "Spelling and Punctuation", super_topic:, key: "spelling_punctuation")
 
-Topic.unscoped.find_or_create_by(title: "Verbal Reasoning", super_topic:, key: "verbal_reasoning")
+verbal_reasoning_topic = Topic.unscoped.find_or_create_by(title: "Verbal Reasoning", super_topic:, key: "verbal_reasoning")
 Topic.unscoped.find_or_create_by(title: "Non-verbal Reasoning", super_topic:, key: "non_verbal_reasoning")
 Topic.unscoped.find_or_create_by(title: "Vocabulary", super_topic:, key: "vocabulary")
 Topic.unscoped.find_or_create_by(title: "Comprehension", super_topic:, key: "comprehension")
@@ -22,6 +22,8 @@ Topic.unscoped.find_or_create_by(title: "Comprehension", super_topic:, key: "com
   ratio
   rounding
   proportions_of_numbers
+  place_value_multiplication_division
+  place_values
   sequence_progression].each do |question_type|
     Topic.unscoped.find_or_create_by(parent_topic: maths_topic, key: question_type, title: question_type.humanize, super_topic:)
   end
@@ -32,4 +34,8 @@ end
 
 %w[spellings ie_ei_words commonly_misspelled_words].each do |question_type|
   Topic.unscoped.find_or_create_by(parent_topic: spelling_punctuation_topic, key: question_type, title: question_type.humanize, super_topic:)
+end
+
+%w[word_ladders].each do |question_type|
+  Topic.unscoped.find_or_create_by(parent_topic: verbal_reasoning_topic, key: question_type, title: question_type.humanize, super_topic:)
 end
