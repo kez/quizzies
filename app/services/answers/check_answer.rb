@@ -13,5 +13,6 @@ class Answers::CheckAnswer < Actor
     Answers::SpellingPunctuation::IeEiWords,
     Answers::SpellingPunctuation::CommonlyMisspelledWords,
     Answers::English::BestMissingWords,
-    Answers::English::CommonlyConfusedWords
+    Answers::English::CommonlyConfusedWords,
+    Answers::VerbalReasoning::WordLadders
 end

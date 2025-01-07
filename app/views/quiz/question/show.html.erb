@@ -79,6 +79,18 @@
               <% end %>
             </div>
           </div>
+        <% elsif @question.question.topic.key == "word_ladders"  %>
+          <div>
+            <div class='text-3xl my-8 flex flex-wrap items-center gap-x-1'>
+              <% parts = JSON.parse(@question.question.title) %>
+              <div class=' flex flex-wrap items-center gap-x-2 text-3xl font-bold'>
+                <div><%= parts.first %></div>
+                <%= f.text_field :answer0, class: 'input input-bordered  w-28 text-center text-xl',  value:  @question.answered ? @question.question.answers.first : nil, autofocus: true, autocomplete: 'off' %>
+                <%= f.text_field :answer1, class: 'input input-bordered  w-28 text-center text-xl', value:  @question.answered ? @question.question.answers.last : nil, autofocus: true, autocomplete: 'off' %>
+                <div><%= parts.last %></div>
+              </div>
+            </div>
+          </div>
         <% else %>
           <%= f.text_field :answer, class: 'input input-bordered input-lg', value:  @question.answered ? @question.question.answer : nil, autofocus: true, autocomplete: 'off' %>
         <% end %>

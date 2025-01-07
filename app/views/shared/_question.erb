@@ -68,6 +68,8 @@
   </script>
 <% elsif question.question.topic.key == "multiplication_division" %>
   What is <%= question.title %>
+<% elsif question.question.topic.key == "word_ladders" %>
+  Complete the following word ladder
 <% else %>
   <%= question.title %>
 <% end %>
