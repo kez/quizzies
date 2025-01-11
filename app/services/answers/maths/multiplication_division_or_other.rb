@@ -6,7 +6,7 @@ class Answers::Maths::MultiplicationDivisionOrOther < Actor
 
   def call
     return unless valid_for_this_question_type?
-    self.correct = Float(input) == Float(question.answer)
+    self.correct = Float(input.to_s.delete(",")) == Float(question.answer)
     puts [self.class.name, correct]
   end
 
