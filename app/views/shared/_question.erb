@@ -48,19 +48,15 @@
     const audio = document.querySelector(`audio[data-key="word"]`);
 
     if (audio) {
-    console.log(audio)
-    // key.classList.add("playing");
     audio.currentTime = 0;audio.play();
       document.getElementById("answer").focus();
-
     }
     }
     function playSlow() {
     const audio_slow = document.querySelector(`audio[data-key="word_slow"]`);
 
     if (audio_slow) {
-    console.log(audio_slow)
-    // key.classList.add("playing");
+    
     audio_slow.currentTime = 0;audio_slow.play();
     document.getElementById("answer").focus();
     }
