@@ -41,8 +41,8 @@
   Spell the word
   <button onclick="play()" class="btn btn-primary text-white">Play audio</button>
   <button onclick="playSlow()" class="btn btn-primary text-white">Play audio (slower)</button>
-  <audio autoplay data-key="word" src="/audio/spellings_punctuations/spellings/<%= question.question.data['audio_file_1'] %>"></audio>
-  <audio data-key="word_slow" src="/audio/spellings_punctuations/spellings/<%= question.question.data['audio_file_2'] %>"></audio>
+  <audio autoplay data-key="word" src="/uploads/audio/spellings_punctuations/spellings/<%= question.question.data['audio_file_1'] %>"></audio>
+  <audio data-key="word_slow" src="/uploads/audio/spellings_punctuations/spellings/<%= question.question.data['audio_file_2'] %>"></audio>
   <script>
     function play() {
     const audio = document.querySelector(`audio[data-key="word"]`);
