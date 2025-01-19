@@ -31,7 +31,7 @@ class QuizController < ApplicationController
     topic = Topic.find_by_prefix_id(allowed_params[:topic])
     question_count = allowed_params[:question_count].to_i
 
-    quiz = Quiz.new(topic: topic, status: 0, user: Current&.user)
+    quiz = Quiz.new(topic: topic, status: 0, user_id: current_session&.user_id)
 
     sub_topics = topic.sub_topics.map { |sub_topic| sub_topic.id }
     potential_questions = Question.select(:id, :topic_id).where(topic_id: sub_topics).all.shuffle
@@ -75,5 +75,11 @@ class QuizController < ApplicationController
     ahoy.track "Quiz Created", {quid_id: quiz.id}
 
     redirect_to quiz_question_path(quiz.to_param, 0), notice: "Quiz created - good luck!", format: :html
+  end
+
+  private
+
+  def current_session
+    Session.find_by(id: cookies.signed[:session_id]) if cookies.signed[:session_id]
   end
 end

@@ -1,3 +1,4 @@
+
 <% content_for(:html_title) { "Quizzies - quick quizzes on key 11+ topics" } %>
 <% content_for :meta do %>
   <%= render PageMetaComponent.new(title: @title, description: @description) %>
@@ -6,9 +7,7 @@
   <section class='prose prose-lg prose-inter'>
     <h1 class='font-nunito-black'>11+ Quizzes</h1>
     <%= render "shared/flashes" %>
-    <p>Test your knowledge with our 11+ quizzies.  Short quizes on the various topics with instant feedback.</p>
-    <p>Quizzies has been built using a combination of free reference materials for the 11+ and modern AI (LLMs) to create a large range of relevant quiz questions to test knowledge.</p>
-    <p>It is free to use, and if you access it via ther same browser it will remember your recent quizzes without the need to sign up.  If you would like to sign up you will be able to more closely track progress and tailor follow-up quizzes to re-test weaker areas or questions.</p>
+
     <h2 class='font-nunito-black'>Choose an 11+ topic to get started</h2>
     <div class='grid md:grid-cols-2 gap-4'>
       <% @super_topic.topics.each_with_index do |topic, index| %>
@@ -16,6 +15,12 @@
         <a href='/quiz/<%= @super_topic.key %>/<%= topic.key %>' class='font-nunito animate-in fade-in zoom-in btn  btn-hand btn-secondary text-white text-xl'><%= topic.title %></a>
       <% end %>
     </div>
+
+
+    <p>Test your knowledge with our 11+ quizzies.  Short quizes on the various topics with instant feedback.</p>
+    <p>Quizzies has been built using a combination of free reference materials for the 11+ and modern AI (LLMs) to create a large range of relevant quiz questions to test knowledge.</p>
+    <p>It is free to use, and if you access it via ther same browser it will remember your recent quizzes without the need to sign up.  If you would like to sign up you will be able to more closely track progress and tailor follow-up quizzes to re-test weaker areas or questions.</p>
+    
     <% if @recent_quizzes.size.positive? %>
       <h2 class='font-nunito-black'>Your recent quizzes</h2>
       <% @recent_quizzes.each do |quiz| %>
