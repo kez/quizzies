@@ -20,7 +20,7 @@
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <% if Rails.env.production? %>
-      <script defer event-logged_in="<%= logged_in? %>" data-domain="quizzies.app" src="https://a1.kdobson.net/js/script.pageview-props.tagged-events.js"></script>
+      <script defer event-logged_in="<%= authenticated? %>" data-domain="quizzies.app" src="https://a1.kdobson.net/js/script.pageview-props.tagged-events.js"></script>
     <% end %>
     <%= yield :meta %>
   </head>
