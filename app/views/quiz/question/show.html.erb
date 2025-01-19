@@ -87,8 +87,7 @@
                 <% if part.include?('__') %>
                   <div class=' flex flex-wrap items-center gap-x-2 text-3xl font-bold'>
                     <div><%= part.split('_').first %></div>
-                    <%= f.text_field :answer0, class: 'input input-bordered input-sm w-10 text-center text-xl', max_length: 1, value:  @question.answered ? @question.question.answers.first : nil, autofocus: true, autocomplete: 'off' %>
-                    <%= f.text_field :answer1, class: 'input input-bordered input-sm w-10 text-center text-xl', max_length: 1, value:  @question.answered ? @question.question.answers.last : nil, autofocus: true, autocomplete: 'off' %>
+                    <%= f.text_field :answer, class: 'input input-bordered input-sm w-20 text-center text-xl', max_length: 2, value:  @question.answered ? @question.question.answers.join : nil, autofocus: true, autocomplete: 'off' %>
                     <div><%= part.split('_').last %></div>
                   </div>
                 <% else  %>

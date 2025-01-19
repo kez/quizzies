@@ -7,7 +7,8 @@ class Answers::SpellingPunctuation::IeEiWords < Actor
 
   def call
     return unless valid_for_this_question_type?
-    self.correct = question.answers == input.map { |s| s.downcase }
+
+    self.correct = question.answers == [input.to_s.downcase[0], input.to_s.downcase[1]]
     if correct
       self.feedback = "Correct, the word #{question.data["word"]} is means  \"#{question.data["definition"]}\""
     end
