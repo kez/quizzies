@@ -1,0 +1,51 @@
+<%= form_for @record, url: @record.id? ? admin_topic_url(@record) : "/admin/topics", method: @record.id? ? :patch : :post, data: {turbo: false} do |f| %>
+
+
+<div class='grid grid-cols-2 gap-x-2 gap-y-2 mb-8'>
+
+  <label class="form-control w-full">
+    <div class="label"><span class="label-text">Title</span></div>
+    <%= f.text_field :title, class: 'input input-bordered w-full' %>
+  </label>
+
+  <label class="form-control w-full">
+    <div class="label"><span class="label-text">Status</span></div>
+    <%= f.select :status, options_for_select([['Draft', -1], ['Published', 1]], @record.status), {include_blank: true}, {class: 'select select-bordered max-w-full' } %>
+  </label>
+
+  <div class='col-span-2'>
+    <label class="form-control w-full">
+      <div class="label"><span class="label-text">Summary</span></div>
+      <%= f.text_area :summary, class: 'textarea textarea-bordered max-w-full w-100', rows: 3 %>
+    </label>
+  </div>
+
+  <div class='col-span-2'>
+    <label class="form-control w-full">
+      <div class="label"><span class="label-text">Description</span></div>
+      <%= f.text_area :description, class: 'textarea textarea-bordered max-w-full w-100', rows: 10 %>
+    </label>
+  </div>
+
+  <div class='col-span-2'>
+    <label class="form-control w-full">
+      <div class="label"><span class="label-text">Help</span></div>
+      <%= f.text_area :help_text, class: 'textarea textarea-bordered max-w-full w-100', rows: 10 %>
+    </label>
+  </div>
+
+
+  <label class="form-control w-full">
+    <div class="label"><span class="label-text">Key</span></div>
+    <%= f.text_field :key, class: 'input input-bordered w-full', disabled: @record.id? %>
+  </label>
+
+
+
+
+
+</div>
+
+<%= f.button 'Submit', class: "btn btn btn-primary" %>
+
+<% end %>

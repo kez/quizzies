@@ -1,0 +1,13 @@
+<div class='prose prose-md'>
+  <h1>Topics</h1>
+  <p>Select a topic to edit</p>
+<% @records.each do |record| %>
+  <li>
+    <div class='flex gap-x-2 items-center <%= 'font-bold' if record.parent_topic_id.nil? %>'>
+    <div><%= link_to record.title, edit_admin_topic_url(record) %></div>
+    <div class='badge badge-sm badge-outline <%= 'badge-warning' if record.status == -1 %> <%= 'badge-success' if record.status == 1 %>'><%= record.published_status %></div>
+    </div>
+    
+  </li>
+<% end %>
+</div>

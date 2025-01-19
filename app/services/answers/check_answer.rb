@@ -9,6 +9,7 @@ class Answers::CheckAnswer < Actor
     Answers::English::Antonyms,
     Answers::English::Idioms,
     Answers::Maths::MultiplicationDivisionOrOther,
+    Answers::Maths::FractionEquivalence,
     Answers::SpellingPunctuation::Spellings,
     Answers::SpellingPunctuation::IeEiWords,
     Answers::SpellingPunctuation::CommonlyMisspelledWords,

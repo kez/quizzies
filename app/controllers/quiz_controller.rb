@@ -1,10 +1,22 @@
 class QuizController < ApplicationController
+  allow_unauthenticated_access
   def new
     @title = "Start a New Quiz"
 
     # @topic = Topic.find_by_prefix_id(params[:topic])
     @topic = Topic.find_by(key: params[:topic])
     @super_topic = SuperTopic.find_by(key: params[:super_topic])
+
+    # @breadcrumbs << ["New #{@topic.title} Quiz"]
+  end
+
+  def subtopic
+    @topic = Topic.find_by(key: params[:parent_topic])
+    @super_topic = SuperTopic.find_by(key: params[:super_topic])
+    @subtopic = Topic.find_by(key: params[:sub_topic])
+
+    @breadcrumbs << ["New #{@topic.title} Quiz", new_quiz_seo_url(@super_topic.key, @topic.key)]
+    @breadcrumbs << [@subtopic.title]
   end
 
   def show
@@ -19,7 +31,7 @@ class QuizController < ApplicationController
     topic = Topic.find_by_prefix_id(allowed_params[:topic])
     question_count = allowed_params[:question_count].to_i
 
-    quiz = Quiz.new(topic: topic, status: 0)
+    quiz = Quiz.new(topic: topic, status: 0, user: Current&.user)
 
     sub_topics = topic.sub_topics.map { |sub_topic| sub_topic.id }
     potential_questions = Question.select(:id, :topic_id).where(topic_id: sub_topics).all.shuffle

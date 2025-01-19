@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_05_171001) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_18_170220) do
   create_table "ahoy_events", force: :cascade do |t|
     t.integer "visit_id"
     t.integer "user_id"
@@ -53,6 +53,22 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_05_171001) do
     t.index ["visitor_token", "started_at"], name: "index_ahoy_visits_on_visitor_token_and_started_at"
   end
 
+  create_table "blogs", force: :cascade do |t|
+    t.string "blog_type"
+    t.string "title"
+    t.string "summary"
+    t.string "body"
+    t.string "image"
+    t.string "slug"
+    t.json "data", default: {}
+    t.datetime "published_at"
+    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["discarded_at"], name: "index_blogs_on_discarded_at"
+    t.index ["slug"], name: "index_blogs_on_slug"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.integer "topic_id"
     t.string "title"
@@ -88,7 +104,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_05_171001) do
     t.string "title"
     t.json "questions"
     t.integer "status"
-    t.string "nanoid"
     t.json "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -112,10 +127,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_05_171001) do
     t.string "description"
     t.string "country_code"
     t.string "key"
-    t.string "nanoid"
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "summary"
     t.index ["title", "country_code"], name: "index_super_topics_on_title_and_country_code", unique: true
   end
 
@@ -127,7 +142,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_05_171001) do
     t.string "description"
     t.integer "status"
     t.string "key"
-    t.string "nanoid"
+    t.string "summary"
+    t.string "help_text"
     t.index ["parent_topic_id"], name: "index_topics_on_parent_topic_id"
     t.index ["super_topic_id", "title"], name: "index_topics_on_super_topic_id_and_title", unique: true
     t.index ["super_topic_id"], name: "index_topics_on_super_topic_id"

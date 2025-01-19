@@ -24,6 +24,12 @@
   <br />
   <br />
   <span class='text-black'><%= question.question.title %></span>
+<% elsif question.question.topic.key ==  "difficult_spellings" %>
+  <br />
+  Correct the spelling mistake in the sentence below
+  <br />
+  <br />
+  <span class='text-black'><%= question.question.title %></span>
 
 <% elsif question.question.topic.key ==  "commonly_confused_words" %>
   <br />
@@ -68,6 +74,12 @@
   Complete the following word ladder
 <% elsif question.question.topic.key == "place_values" %>
 <%= question.title %>
+<% elsif question.question.topic.key == "fraction_equivalence" %>
+
+<div class='flex gap-x-2 items-center'>
+  <div>Select the simplified, lowest form of this fraction</div>
+  <div> <img src="/uploads/images/fractions/<%= question.question.title.gsub('/', '_') %>.png" class='w-16' /></div>
+</div>
 <% else %>
   <%= question.title %>
 <% end %>

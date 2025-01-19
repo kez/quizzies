@@ -40,3 +40,4 @@
 .env
 public/audio/*
 node_modules
+public/uploads

@@ -1,4 +1,5 @@
 class Quiz::QuestionController < ApplicationController
+  allow_unauthenticated_access
   def show
     @quiz = Quiz.find_by_prefix_id(params[:quiz_id])
     # ordinal is passed in the id param

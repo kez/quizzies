@@ -6,4 +6,8 @@ class Topic < ApplicationRecord
   has_many :sub_topics, class_name: "Topic", foreign_key: "parent_topic_id"
   belongs_to :parent_topic, class_name: "Topic", optional: true
   has_many :questions
+
+  def published_status
+    (status == 1) ? "Published" : "Draft"
+  end
 end

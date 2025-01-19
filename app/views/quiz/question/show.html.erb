@@ -62,12 +62,21 @@
               </div>
             <% end %>
           </div>
-                <% elsif @question.question.topic.key == "place_values"  %>
+          <% elsif @question.question.topic.key == "place_values" %>
           <div>
             <% @question.question.data['options'].shuffle.each_with_index do |sent, index| %>
               <div class='flex gap-x-2 text-3xl  mb-8'>
                 <div><input type="radio" name="answer" id="answer_<%= index %>" value="<%= sent %>"></div>
                 <label for="answer_<%= index %>"><%= sent %></label>
+              </div>
+            <% end %>
+          </div>
+          <% elsif @question.question.topic.key == "fraction_equivalence" %>
+          <div>
+            <% @question.question.data['options'].shuffle.each_with_index do |sent, index| %>
+              <div class='flex gap-x-2 text-3xl  mb-8'>
+                <div><input type="radio" name="answer" id="answer_<%= index %>" value="<%= sent %>"></div>
+                <label for="answer_<%= index %>"><img src="/uploads/images/fractions/<%= sent.gsub('/', '_') %>.png" class='w-12' /></label>
               </div>
             <% end %>
           </div>
@@ -88,6 +97,9 @@
               <% end %>
             </div>
           </div>
+
+        <% elsif @question.question.topic.key == "difficult_spellings"  %>
+          <%= f.text_field :answer, class: 'input input-bordered input-lg', value:  @question.answered ? @question.question.answer : nil, autofocus: true, autocomplete: 'off', required: (@question.attempts.to_i.zero?) %>
         <% elsif @question.question.topic.key == "word_ladders"  %>
           <div>
             <div class='text-3xl my-8 flex flex-wrap items-center gap-x-1'>
@@ -104,10 +116,20 @@
           <%= f.text_field :answer, class: 'input input-bordered input-lg', value:  @question.answered ? @question.question.answer : nil, autofocus: true, autocomplete: 'off', required: (@question.attempts.to_i.zero?) %>
         <% end %>
       </div>
+
+      <div class='  text-slate-500 mb-4'>
+        <%= render "shared/help",  {question: @question} %>
+      </div>
+
+
       <div class='flex justify-start gap-x-2'>
         <%= f.button 'Submit Answer', class: 'btn btn-secondary btn-hand btn-lg my-4' if @question.answered != 1 %>
         <%= f.button 'Continue', class: 'btn btn-success btn-hand  btn-lg my-4' if @question.answered == 1 %>
         <%= f.button 'Skip question', name: :skip, class: 'btn btn-ghost btn-lg my-4' if @question.attempts.to_i > 0 && @question.answered.to_i != 1 %>
+      </div>
+
+      <div class='text-right font-mono text-slate-500 text-sm'>
+        Question type: <%= @question.question.topic.title %>
       </div>
     <% end %>
   </div>

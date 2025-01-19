@@ -5,17 +5,8 @@ class ApplicationController < ActionController::Base
 
   # allow_browser versions: :modern
 
-  allow_unauthenticated_access
   before_action :set_session
-
-  def home
-    @super_topic = SuperTopic.first
-
-    @recent_quizzes = []
-    if session[:nanoid]
-      @recent_quizzes = Quiz.includes(:topic).order("created_at desc").where(Arel.sql("data->>'session_nanoid' = ?", session[:nanoid])).limit(10).all
-    end
-  end
+  before_action :set_breadcrumbs
 
   private
 
@@ -30,5 +21,9 @@ class ApplicationController < ActionController::Base
     if !session[:nanoid].nil? && cookies[:nanoid].nil?
       cookies[:nanoid] = session[:nanoid]
     end
+  end
+
+  def set_breadcrumbs
+    @breadcrumbs = [["Home", root_url]]
   end
 end

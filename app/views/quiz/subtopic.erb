@@ -1,0 +1,8 @@
+<div>
+  <section class='prose prose-lg prose-inter'>
+    <h1 class='font-nunito-black'><%= @super_topic.title %> <%= @topic.title %> quizzes</h1>
+    <h2 class='font-nunito-black'><%= @subtopic.title %> sub-topic</h2>
+    <p><%= render_markdown(@subtopic.summary) %></p>
+    <p><%= render_markdown(@subtopic.description) %></p>
+  </section>
+</div>

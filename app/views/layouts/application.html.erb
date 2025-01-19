@@ -19,23 +19,61 @@
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <% if Rails.env.production? %>
+      <script defer event-logged_in="<%= logged_in? %>" data-domain="quizzies.app" src="https://a1.kdobson.net/js/script.pageview-props.tagged-events.js"></script>
+    <% end %>
+    <%= yield :meta %>
   </head>
   <body class='bg-gradient-to-r from-teal-400 to-yellow-200 min-h-screen'>
+    
+    <div class='pt-16'>
+      <div class=" mx-auto max-w-4xl px-12 bg-white btn-hand ">
+        <div class='flex gap-x-2 items- mx-auto pt-8 pb-16  justify-between items-center'>
+          <div class='flex gap-x-2 items-center'><a class="" href="/">
+              <img src="/logo.png" class='w-24'/></a>
+            <a class="btn btn-ghost text-4xl font-nunito-black" href="/">Quizzies</a>
+          </div>
+          <div class='flex gap-x-2 items-center'>
+            <% unless authenticated? %>
+            
+              <%= link_to 'Register', new_registration_url, class: 'btn btn btn-sm ' %>
+              <%= link_to 'Log In', new_session_url , class: 'btn btn btn-sm ' %>
+            <% else %>
+            <%= link_to 'Admin', admin_root_url, class: 'btn btn-small btn-outline' if Current.user&.admin? %>
+              <%= link_to "Logout", session_url, data: { turbo_method: :delete } , class: 'btn btn btn-sm ' %>
+            <% end %>
+          </div>
+        </div>
+        <div class='pb-8'>
 
-<div class='pt-16'>
+          <%= render BreadcrumbsComponent.new(items: @breadcrumbs) unless @breadcrumbs.size == 1 %>
 
-    <div class=" mx-auto max-w-4xl px-12 bg-white btn-hand ">
-      <div class='flex gap-x-2 items-center mx-auto pt-8 pb-16 '>
-        <div><a class="" href="/"><img src="/logo.png" class='w-24'/></a></div>
-        <div class="navbar ">
-          <a class="btn btn-ghost text-2xl font-nunito-black" href="/">Quizzies</a>
+
+          <%= yield %>
+          <%# <footer class="footer bg-gray-50 text-black-content p-2">
+  <nav>
+    <h6 class="footer-title">Services</h6>
+    <a class="link link-hover">Branding</a>
+    <a class="link link-hover">Design</a>
+    <a class="link link-hover">Marketing</a>
+    <a class="link link-hover">Advertisement</a>
+  </nav>
+  <nav>
+    <h6 class="footer-title">Company</h6>
+    <a class="link link-hover">About us</a>
+    <a class="link link-hover">Contact</a>
+    <a class="link link-hover">Jobs</a>
+    <a class="link link-hover">Press kit</a>
+  </nav>
+  <nav>
+    <h6 class="footer-title">Legal</h6>
+    <a class="link link-hover">Terms of use</a>
+    <a class="link link-hover">Privacy policy</a>
+    <a class="link link-hover">Cookie policy</a>
+  </nav>
+</footer> %>
         </div>
       </div>
-
-      <div class='pb-8'>
-      <%= yield %>
-      </div>
-    </div>
     </div>
   </body>
 </html>

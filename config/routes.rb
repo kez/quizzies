@@ -13,9 +13,13 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "application#home"
+  root "home#home"
 
-  get "/quiz/:super_topic/:topic", to: "quiz#new", as: "new_quiz_seo"
+  namespace :admin do
+    root "admin#index"
+    resources :topics
+    resources :blog
+  end
 
   resources :quiz do
     get "/:id/finished", to: "quiz#finished", as: "finished"
@@ -23,4 +27,7 @@ Rails.application.routes.draw do
       resources :question
     end
   end
+
+  get "/quiz/:super_topic/:topic", to: "quiz#new", as: "new_quiz_seo"
+  get "/quiz/:super_topic/:parent_topic/:sub_topic", to: "quiz#subtopic", as: "subtopic_quiz_seo"
 end

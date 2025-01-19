@@ -12,10 +12,10 @@ class Answers::SpellingPunctuation::Spellings < Actor
   private
 
   def this_question_type_key
-    "spellings"
+    %w[spellings difficult_spellings]
   end
 
   def valid_for_this_question_type?
-    question.topic.key == this_question_type_key
+    this_question_type_key.include?(question.topic.key)
   end
 end

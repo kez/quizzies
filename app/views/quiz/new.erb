@@ -22,7 +22,7 @@
 
     <ul>
       <% @topic.sub_topics.each do |sub_topic| %>
-        <li><%= sub_topic.title %></li>
+        <li><%= link_to sub_topic.title, subtopic_quiz_seo_url(@super_topic.key, @topic.key, sub_topic.key) %></li>
       <% end %>
     </ul>
   

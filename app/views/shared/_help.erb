@@ -1,0 +1,10 @@
+<% if question.question.topic.help_text.present? %>
+<div tabindex="0" class="collapse collapse-plus border-base-200 bg-base-200 border my-4">
+  <div class="collapse-title text-base  font-bold">Help with this type of question</div>
+  <div class="collapse-content">
+    
+  <%= render_markdown(question.question.topic.help_text) %>
+    
+  </div>
+</div>
+<% end %>

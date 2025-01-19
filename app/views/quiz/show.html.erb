@@ -18,7 +18,10 @@
               </span>
             <%= question.answered ? '✅' : 'skipped' %>
             <% if question.attempts > 1 %>
-              <%= "#{question.attempts} attempts"  %>
+              <%= "#{question.attempts} attempts."  %>
+              <% if !question.answered %>
+              The answer was <b><%= question.question.answer %></b>.
+              <% end %>
             <% end %>
           </li>
         <% end %>
