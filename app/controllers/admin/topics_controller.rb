@@ -1,10 +1,10 @@
 class Admin::TopicsController < Admin::AdminController
   def index
-    @records = Topic.order(:title).all
+    @records = Topic.unscoped.order(:title).all
   end
 
   def edit
-    @record = Topic.find(params[:id])
+    @record = Topic.unscoped.find(params[:id])
   end
 
   def update
