@@ -24,12 +24,23 @@
   <br />
   <br />
   <span class='text-black'><%= question.question.title %></span>
-<% elsif question.question.topic.key ==  "difficult_spellings" %>
+<% elsif question.question.topic.key ==  "difficult-spellings" %>
   <br />
   Correct the spelling mistake in the sentence below
   <br />
   <br />
   <span class='text-black'><%= question.question.title %></span>
+
+<% elsif question.question.topic.key ==  "focussed_vocabulary" %>
+  <br />
+  Pick the closest meaning for the word "<%= question.question.data['word'] %>"
+  <br />
+  
+
+  <% if question.attempts&.positive? %>
+    <br>
+    <span class='text-gray-400 text-lg'> Example use in a sentence:  <%= question.question.title %></span>
+  <% end %>
 
 <% elsif question.question.topic.key ==  "commonly_confused_words" %>
   <br />

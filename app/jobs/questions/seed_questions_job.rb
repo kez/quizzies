@@ -13,8 +13,8 @@ class Questions::SeedQuestionsJob < ApplicationJob
       # next unless %w[sequence_progression].include?(question_type)
       # next unless %w[multiplication_division ratio best_missing_words antonyms homophones commonly_confused_words ie_ei_words commonly_misspelled_words word_ladders].include?(question_type)
       # next unless %w[place_values].include?(question_type)
-      next unless %w[place_value_multiplication_division place_values word_ladders fraction_equivalence spellings difficult_spellings].include?(question_type)
-      next unless %w[difficult_spellings].include?(question_type)
+      next unless %w[place_value_multiplication_division place_values word_ladders fraction_equivalence spellings difficult_spellings focussed_vocabulary].include?(question_type)
+      next unless %w[focussed_vocabulary].include?(question_type)
       # next unless %w[idioms homophones antonyms].include?(question_type)
       # next unless %w[spellings].include?(question_type)
       # next unless %w[best_missing_words].include?(question_type)
@@ -28,7 +28,7 @@ class Questions::SeedQuestionsJob < ApplicationJob
         number_to_create = 100
       end
 
-      if %w[commonly_confused_words ie_ei_words commonly_misspelled_words word_ladders place_values place_value_multiplication_division spellings difficult_spellings].include?(question_type)
+      if %w[commonly_confused_words ie_ei_words commonly_misspelled_words word_ladders place_values place_value_multiplication_division spellings difficult_spellings focussed_vocabulary].include?(question_type)
         number_to_create = 1000
       end
 

@@ -13,7 +13,7 @@ class Answers::SpellingPunctuation::Spellings < Actor
   private
 
   def this_question_type_keys
-    %w[spellings difficult-spellings]
+    %w[spellings difficult-spellings focussed_vocabulary]
   end
 
   def valid_for_this_question_type?

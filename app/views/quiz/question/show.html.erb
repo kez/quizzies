@@ -62,6 +62,15 @@
               </div>
             <% end %>
           </div>
+        <% elsif @question.question.topic.key == "focussed_vocabulary"  %>
+          <div>
+            <% @question.question.data['options'].shuffle.each_with_index do |sent, index| %>
+              <div class='flex gap-x-2 text-3xl  mb-8'>
+                <div><input type="radio" name="answer" id="answer_<%= index %>" value="<%= sent %>"></div>
+                <label for="answer_<%= index %>"><%= sent %></label>
+              </div>
+            <% end %>
+          </div>
           <% elsif @question.question.topic.key == "place_values" %>
           <div>
             <% @question.question.data['options'].shuffle.each_with_index do |sent, index| %>

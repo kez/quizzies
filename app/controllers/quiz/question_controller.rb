@@ -28,7 +28,7 @@ class Quiz::QuestionController < ApplicationController
       end
 
     else
-      quiz_question.update(attempts: (quiz_question.attempts || 0) + 1)
+      quiz_question.update(attempts: (quiz_question.attempts || 0) + 1) unless quiz_question.answered?
     end
 
     input = allowed_params[:answer] || [allowed_params[:answer0], allowed_params[:answer1]].compact
